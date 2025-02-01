@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+    <style>
+        body {
+            font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif, sans-serif;
+            text-align: center;
+            margin-top: 100px;
+            background-color: #ffe6f2;
+            color: #ff0055;
+            transition: background 0.5s ease;
+        }
+        h1 {
+            font-size: 2rem;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1rem;
+            margin: 10px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.2s ease, font-size 0.2s ease;
+        }
+        .yes {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        .no {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+        .video-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            flex-direction: column;
+        }
+        .video-container video {
+            width: 80%;
+            height: auto;
+            object-fit: cover;
+        }
+        .caption {
+            color: white;
+            font-size: 2rem;
+            margin-top: 20px;
+            text-shadow: 2px 2px 5px black;
+        }
+        .share-buttons {
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Will you be my Valentine? ❤️</h1>
+    <button class="yes">Yes</button>
+    <button class="no">No</button>
+
+    <div class="video-container" style="display: none;">
+        <video autoplay muted loop>
+            <source src="https://samplelib.com/lib/preview/mp4/sample-5s.mp4" type="video/mp4"> <!-- Replace with a video of Virat Kohli and his wife -->
+            Your browser does not support the video tag.
+        </video>
+        <div class="caption">Us?? ❤️</div>
+        <div class="share-buttons" style="display: none;">
+            <button class="share-instagram">Share on Instagram</button>
+            <button class="download">Download Screenshot</button>
+        </div>
+    </div>
+
+    <script>
+        const yesButton = document.querySelector('.yes');
+        const noButton = document.querySelector('.no');
+        const videoContainer = document.querySelector('.video-container');
+        const shareButtons = document.querySelector('.share-buttons');
+        const shareInstagram = document.querySelector('.share-instagram');
+        const downloadButton = document.querySelector('.download');
+
+        noButton.addEventListener('click', () => {
+            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = currentSize + 5 + 'px'; // Increase font size
+        });
+
+        noButton.addEventListener('mouseover', () => {
+            const currentSize = parseFloat(window.getComputedStyle(yesButton).fontSize);
+            yesButton.style.fontSize = currentSize + 2 + 'px'; // Gradually increase font size
+            noButton.style.transform = 'translateX(' + (Math.random() * 200 - 100) + 'px)';
+            noButton.style.transform += 'translateY(' + (Math.random() * 200 - 100) + 'px)';
+        });
+
+        yesButton.addEventListener('click', () => {
+            alert('Yay! ❤️ You made my day!');
+            videoContainer.style.display = 'flex';
+            shareButtons.style.display = 'block';
+            console.log('She said YES! 🎉');
+            
+            setTimeout(() => {
+                html2canvas(document.body).then(canvas => {
+                    canvas.toBlob(blob => {
+                        const file = new File([blob], "valentine.png", { type: "image/png" });
+                        const url = URL.createObjectURL(file);
+                        
+                        downloadButton.onclick = () => {
+                            const a = document.createElement('a');
+                            a.href = url;
+                            a.download = 'valentine.png';
+                            document.body.appendChild(a);
+                            a.click();
+                            document.body.removeChild(a);
+                            document.body.removeChild(a);
+                        };
+                    });
+                });
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
